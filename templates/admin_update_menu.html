@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADMIN MENU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://kit.fontawesome.com/de64d1b51f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../static/script.js"></script>
+  <style>
+    body {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #e6e0d4;
+      padding: 20px;
+      min-height: 110vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo h3 {
+        color: var(--main-color);
+        font-size: 2rem;
+        font-weight: 500;
+        font-family: var(--body-font);
+        padding: 0;
+        margin: 0;
+    }
+    .content {
+      color: #666;
+      flex: 1;
+      padding: 20px;
+      position: relative;
+    }
+
+    .admin-profile {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .new-content {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .info {
+      flex-grow: 1;
+    }
+
+    .table th,
+    .table td {
+      vertical-align: middle;
+    }
+
+    .search-box {
+      float: right;
+      margin-bottom: 10px;
+      border-radius: none;
+    }
+
+    .btn-add {
+      margin-bottom: 20px;
+      border-radius: 0 !important;
+    }
+
+    .overlay-form-edit-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+    }
+
+
+    #edit-product-form {
+      display: none;
+      position: fixed;
+      top: 41.25%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      box-shadow: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+    }
+    .nav-link-admin i {
+      font-size: 1.5em;
+      padding: 5px;
+    }
+
+    .nav-link-admin-only i {
+        font-size: 1.4em;
+        padding: 5px;
+    }
+
+    .nav-link-admin-only {
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-link-admin a {
+        color: #666;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+    .sidebar-link-admin a:hover {
+        color: #f5efe3;
+        background-color: #3a422b;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+    .nav-link-admin {
+        display: flex;
+        align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  {% include 'sidebar-admin.html' %}
+
+  <div class="content">
+    <h2 style="color: white;">Menu</h2>
+    <div class="dropdown ms-auto">
+      <a class="dropdown-toggle profile-dropdown" href="#" data-bs-toggle="dropdown" id="navbarDropdownMenuAvatar"
+          role="button" aria-expanded="false">
+          <img src="{{user_info.profile_image}}" class="rounded-circle" height="40" width="40"
+              alt="Admin Profile" />
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+          <li>
+              <a class="dropdown-item" href="/profile">My profile</a>
+          </li>
+          <li>
+              <a class="dropdown-item" onclick="sign_out()">Logout</a>
+          </li>
+      </ul>
+  </div>
+    <!-- New content starts here -->
+    <div class="new-content">
+      <a href="{{ url_for('admin_add_product') }}" class="btn btn-primary btn-add mb-3">+ Add Menu</a>
+      <!-- Overview Section -->
+      <div class="row">
+        <!-- Report Section -->
+        <div class="card-admin-update-menu">
+          <div class="card-body-admin-update-menu">
+
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for menu in menus %}
+                <tr>
+                  <td>{{loop.index}}</td>
+                  <td><img src="{{menu.image}}" alt="menu image" style="width: 100px; height: 100px;"></td>
+                  <td>{{menu.nama}}</td>
+                  <td>{{menu.deskripsi}}</td>
+                  <td>{{menu.harga}}</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm button-edit-product" data-name="{{menu.nama}}"
+                      data-price="{{menu.harga}}" data-description="{{menu.deskripsi}}" data-image="{{menu.image}}"
+                      data-id="{{menu.menuId}}"><i class=" fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm btn-remove-product" data-id="{{menu.menuId}}"><i
+                        class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+                {% endfor %}
+
+
+              </tbody>
+            </table>
+
+            <div class="container">
+              <div class="row align-items-start">
+                <div class="col-md-12">
+                  <p style="color: #666" id="result-count">0 results</p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Edit Menu Form -->
+    <div class="overlay-form-edit-menu" id="overlay-form-edit-menu"></div> <!-- Overlay -->
+    <div class="container my-5" id="edit-product-form" style="display: none;">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="bg-light p-4 rounded">
+            <div class="row">
+              <div class="col-md-12">
+                <form class="form-edit-product" action="/edit_product" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="productId" id="productId">
+                  <input type="hidden" name="currentImage" id="currentImage">
+                  <div class="mb-3">
+                    <label for="ProductName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="Name" name="productName" placeholder="">
+                  </div>
+                  <div class="mb-3">
+                    <label for="ProductPrice" class="form-label">Product Price</label>
+                    <div class="input-group">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" class="form-control" id="Price" name="productPrice" placeholder="">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="ProductDescription" class="form-label">Product Description</label>
+                    <input type="text" class="form-control" id="Description" name="productDescription" placeholder="">
+                  </div>
+                  <div class="mb-3">
+                    <label for="Images" class="form-label">Media (Images)</label>
+                    <div class="upload-image-admin-add-product">
+                      <img src="https://ik.imagekit.io/coffeeshopteam3/land2.jpg" alt="Placeholder" id="imagePreview"
+                        style="width: 100px; height: 100px;">
+                      <input id="upload" type="file" class="form-control mt-3" accept=".png,.jpg,.jpeg"
+                        name="image_file" style="border-radius: 0;" placeholder="Enter the Image" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn button-edit-product-cancel me-2">Cancel</button>
+                    <button type="submit" class="btn btn-secondary button-profile">Update</button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.btn-remove-product').click(function () {
+        const productId = $(this).data('id');
+        console.log(productId);
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: '/remove_product',
+              type: 'POST',
+              data: { productId: productId },
+              success: function (response) {
+                console.log(response);
+                window.location.reload();
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            });
+          }
+        })
+
+      })
+      $('.button-edit-product').click(function () {
+        const productId = $(this).data('id');
+        const name = $(this).data('name');
+        const price = $(this).data('price');
+        const description = $(this).data('description');
+        const image = $(this).data('image');
+        let cleanedPrice = price.replace('Rp ', '');
+        let a = cleanedPrice.split(',')[0];
+        
+        let numericPrice = a.replace('.','');
+        console.log(cleanedPrice,numericPrice)
+        $('#edit-product-form #productId').val(productId);
+        $('#edit-product-form #Name').val(name);
+        $('#edit-product-form #Price').val(numericPrice);
+        $('#edit-product-form #Description').val(description);
+        $('#edit-product-form #currentImage').val(image);
+        $('#edit-product-form #imagePreview').attr('src', image);
+        
+        $('#upload').change(function () {
+          const file = this.files[0];
+          console.log(file);
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              $('#imagePreview').attr('src', e.target.result);
+              console.log(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        $('#overlay-form-edit-menu').fadeIn();
+        $('#edit-product-form').fadeIn();
+      });
+
+      $('.button-edit-product-cancel').click(function () {
+        $('#overlay-form-edit-menu').fadeOut();
+        $('#edit-product-form').fadeOut();
+        $('#upload').val('');
+      });
+    });
+
+    $(document).ready(function () {
+      updateResultCount();
+
+      function updateResultCount() {
+        var rowCount = $('table tbody tr').length;
+        $('#result-count').text(rowCount + ' results');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

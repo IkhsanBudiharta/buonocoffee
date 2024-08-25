@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENU DETAIL</title>
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c1061d734f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick-theme.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        .overlay-form {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 34px;
+            cursor: pointer;
+        }
+
+
+        #login-checkout {
+            display: none;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+        }
+
+        img.left-side-image-checkout-login {
+            width: 100%;
+            height: 100%;
+            margin-top: 50px;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .separator:not(:empty)::before {
+            margin-right: .25em;
+        }
+
+        .separator:not(:empty)::after {
+            margin-left: .25em;
+        }
+
+        .privacy-policy-container {
+            text-align: center;
+            margin: 20px 0;
+
+        }
+
+        .privacy-policy-text {
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 768px) {
+            img.left-side-image-checkout-login {
+                width: 50%;
+                height: 50%;
+                margin-top: 50px;
+                justify-content: center !important;
+                align-items: center !important;
+                align-content: center !important;
+                align-self: center !important;
+            }
+        }
+        .footer-about span {
+            margin-left: 8px;
+        }
+        .fa-cart-shopping {
+            margin-right: 9px;
+        }
+        body {
+            background-color: white;
+            height: max-content;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <aside class="col-lg-6">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                        <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image"
+                            href="{{menu_item.image}}">
+                            <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit hero-image-product"
+                                src="{{menu_item.image}}" />
+                        </a>
+                    </div>
+                </aside>
+                <main class="col-lg-6">
+                    <div class="ps-lg-3">
+                        <h4 class="title product-title text-dark">
+                            {{menu_item.nama}}
+                        </h4>
+                        <div class="d-flex flex-row my-3">
+                            <div class="text-warning mb-1 me-2">
+                                {% for i in range(1, 6) %}
+                                {% if average_rating >= i %}
+                                {% if average_rating | float >= i %}
+                                <i class="fa fa-star"></i>
+                                {% elif average_rating | float >= i - 0.5 %}
+                                <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>{{menu_item.sold}}
+                                sold</span>
+                            <span class="text-success ms-3">{{total_reviews}} reviews</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="h1 product-price" id="product-price">{{menu_item.harga}}</span>
+                        </div>
+                        <form id="add-to-cart-form" method="POST">
+                            {% if 'Meals' in menu_item.kategori or 'Snacks' in menu_item.kategori %}
+                            <div class="mb-3">
+                                <h5>Spicy Level :</h5>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="option1" id="spicyradio1"
+                                        value="Not Spicy" autocomplete="off" checked>
+                                    <label class="btn btn-spicy" for="spicyradio1">Not Spicy</label>
+
+                                    <input type="radio" class="btn-check" name="option1" id="spicyradio2" value="Mild"
+                                        autocomplete="off">
+                                    <label class="btn btn-spicy" for="spicyradio2">Mild</label>
+
+                                    <input type="radio" class="btn-check" name="option1" id="spicyradio3" value="Spicy"
+                                        autocomplete="off">
+                                    <label class="btn btn-spicy" for="spicyradio3">Spicy</label>
+
+                                    <input type="radio" class="btn-check" name="option1" id="spicyradio4"
+                                        value="Very Spicy" autocomplete="off">
+                                    <label class="btn btn-spicy" for="spicyradio4">Very Spicy</label>
+                                </div>
+                            </div>
+                            <div class="vegetable">
+                                <h5>Veggie Options :</h5>
+                                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                    <input type="radio" class="btn-check" name="option2" id="RegularVeggies"
+                                        value="Regular Veggies" autocomplete="off" checked>
+                                    <label class="btn btn-toppings" for="RegularVeggies">Regular Veggies</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="NoVeggies"
+                                        value="No Veggies" autocomplete="off">
+                                    <label class="btn btn-toppings" for="NoVeggies">No Veggies</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="ExtraVeggies"
+                                        value="Extra Veggies" autocomplete="off">
+                                    <label class="btn btn-toppings" for="ExtraVeggies">Extra Veggies</label>
+                                </div>
+                            </div>
+                          {% elif 'Manual Brewing' in menu_item.kategori %}
+                            <div class="mb-3">
+                                <h5>Option : </h5>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="option1" id="NoIce"
+                                        value="No Ice" autocomplete="off" checked>
+                                    <label class="btn btn-cakeflavors" for="NoIce">No Ice</label>
+
+                                    <input type="radio" class="btn-check" name="option1" id="WithIce"
+                                        value="WithIce" autocomplete="off">
+                                    <label class="btn btn-cakeflavors" for="WithIce">With Ice</label>
+                                </div>
+                            </div>
+                            <div class="sugar">
+                                <h5>Sugar Options :</h5>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio4" value="Regular Sugar"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-sugar" for="btnradio4">Regular Sugar</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio5" value="Less Sugar"
+                                        autocomplete="off">
+                                    <label class="btn btn-sugar" for="btnradio5">Less Sugar</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio6" value="Extra Sugar"
+                                        autocomplete="off">
+                                    <label class="btn btn-sugar" for="btnradio6">Extra Sugar</label>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="mb-3">
+                                <h5>Options :</h5>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="option1" id="btnradio1" value="Hot"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-ices" for="btnradio1">Hot</label>
+
+                                    <input type="radio" class="btn-check" name="option1" id="btnradio2" value="Ice"
+                                        autocomplete="off">
+                                    <label class="btn btn-ices" for="btnradio2">Ice</label>
+                                </div>
+                            </div>
+                            <div class="sugar">
+                                <h5>Sugar Options :</h5>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio4" value="Regular Sugar"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-sugar" for="btnradio4">Regular Sugar</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio5" value="Less Sugar"
+                                        autocomplete="off">
+                                    <label class="btn btn-sugar" for="btnradio5">Less Sugar</label>
+
+                                    <input type="radio" class="btn-check" name="option2" id="btnradio6" value="Extra Sugar"
+                                        autocomplete="off">
+                                    <label class="btn btn-sugar" for="btnradio6">Extra Sugar</label>
+                                </div>
+                            </div>
+
+                            {% endif %}
+
+                            <br>
+
+                            <div class="row mb-4">
+                                <div class="col-md-4 col-6 mb-3">
+                                    <label class="mb-2 d-block">Quantity</label>
+                                    <div class="input-group mb-3" style="width: 170px;">
+                                        <button class="btn border border-secondary px-3" type="button"
+                                            id="button-addon1">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number"
+                                            class="product-quantity form-control text-center border border-secondary"
+                                            value="1" min="1" aria-label="Example text with button addon"
+                                            aria-describedby="button-addon1" id="quantity-input" name="quantity" />
+                                        <button class="btn border border-secondary px-3" type="button"
+                                            id="button-addon2">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="menuId" value="{{ menu_item.menuId }}">
+                            <button type="submit" class="btn btn-add-to-cart"> <i
+                                    class="me-1 fa fa-shopping-basket"></i> Add to cart </button>
+                            <a href="#" id="checkout-button" class="btn btn-checkout button-checkout">Checkout</a>
+                        </form>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+    <!-- content -->
+
+    <section class="border-top py-4">
+        <div class="container">
+            <div class="col mb-4">
+                <div class="border rounded-2 px-3 py-2 ">
+                    <!-- Pills navs -->
+                    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                        <li class="nav-item d-flex" role="presentation">
+                            <button
+                                class=" btn-pills btn btn-link d-flex align-items-center justify-content-center w-100 active"
+                                id="ex1-tab-1" data-bs-toggle="pill" data-bs-toggle="pill" data-bs-target="#ex1-pills-1"
+                                role="tab" aria-controls="ex1-pills-1" aria-selected="true">Menu detail</button>
+                        </li>
+                        <li class="nav-item d-flex" role="presentation">
+                            <button
+                                class=" btn-pills btn btn-link d-flex align-items-center justify-content-center w-100"
+                                id="ex1-tab-2" data-bs-toggle="pill" data-bs-toggle="pill" data-bs-target="#ex1-pills-2"
+                                role="tab" aria-controls="ex1-pills-2" aria-selected="false">Reviews
+                                ({{total_reviews}})</button>
+                        </li>
+                        <li class="nav-item d-flex" role="presentation">
+                            <button
+                                class=" btn-pills btn btn-link d-flex align-items-center justify-content-center w-100"
+                                id="ex1-tab-3" data-bs-toggle="pill" data-bs-toggle="pill" data-bs-target="#ex1-pills-3"
+                                role="tab" aria-controls="ex1-pills-3" aria-selected="false">About store</button>
+                        </li>
+
+                    </ul>
+                    <!-- Pills navs -->
+
+                    <!-- Pills content -->
+                    <div class="tab-content" id="ex1-content">
+                        <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel"
+                            aria-labelledby="ex1-tab-1">
+                            <p>
+                                {{menu_item.deskripsi}}
+                            </p>
+
+
+                        </div>
+                        <div class="tab-pane fade" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                            <div class="row">
+                                <div class="col-md-6 align-self-center">
+                                    <div class="mb-3">
+                                        <div class="progress-wrapper">
+                                            <div class="progress-label">5 Stars</div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success text-dark" role="progressbar"
+                                                    style="width: {{ star_percentages.get(5, 0) }}%;"
+                                                    aria-valuenow="{{ star_percentages.get(5, 0) }}" aria-valuemin="0"
+                                                    aria-valuemax="100">{{ star_percentages.get(5, 0) }}%</div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-wrapper">
+                                            <div class="progress-label">4 Stars</div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info text-dark" role="progressbar"
+                                                    style="width: {{ star_percentages.get(4, 0) }}%;"
+                                                    aria-valuenow="{{ star_percentages.get(4, 0) }}" aria-valuemin="0"
+                                                    aria-valuemax="100">{{ star_percentages.get(4, 0) }}%</div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-wrapper">
+                                            <div class="progress-label">3 Stars</div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning text-dark" role="progressbar"
+                                                    style="width: {{ star_percentages.get(3, 0) }}%;"
+                                                    aria-valuenow="{{ star_percentages.get(3, 0) }}" aria-valuemin="0"
+                                                    aria-valuemax="100">{{ star_percentages.get(3, 0) }}%</div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-wrapper">
+                                            <div class="progress-label">2 Stars</div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-danger text-dark" role="progressbar"
+                                                    style="width: {{ star_percentages.get(2, 0) }}%;"
+                                                    aria-valuenow="{{ star_percentages.get(2, 0) }}" aria-valuemin="0"
+                                                    aria-valuemax="100">{{ star_percentages.get(2, 0) }}%</div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-wrapper">
+                                            <div class="progress-label">1 Star</div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-dark" role="progressbar"
+                                                    style="width: {{ star_percentages.get(1, 0) }}%;"
+                                                    aria-valuenow="{{ star_percentages.get(1, 0) }}" aria-valuemin="0"
+                                                    aria-valuemax="100">{{ star_percentages.get(1, 0) }}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Reviews -->
+                                <div class="col-md-6">
+                                    <div class="card card-review">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Reviews</h5>
+                                            <div class="reviews-container" style="max-height: 300px; overflow-y: auto;">
+                                                {% for review in reviews %}
+                                                <div class="review mb-3">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <img src="{{review.profile_image}}" w alt="Profile Picture"
+                                                            class="rounded-circle me-2"
+                                                            style="width: 50px; height: 50px;">
+                                                        <div>
+                                                            <h5 class="mb-0">{{ review.user_name }}</h5>
+                                                            <p class="mb-0">Rated: {{ review.rating }} Stars</p>
+                                                        </div>
+                                                    </div>
+                                                    <p>{{ review.review_text }}</p>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                            <p>Buono, a place where coffee and art lovers gather. We not only serve the perfect cup of coffee, but also provide a unique experience in a unique and aesthetically stunning atmosphere. Every corner of this shop is designed to inspire and create unforgettable moments for every customer who comes. Whether you're here for a peaceful escape, a creative brainstorming session, or simply to indulge in the finest brews, Buono promises a blend of flavors and inspiration that will elevate your day.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="px-0 border rounded-2 shadow-0 ">
+                    <div class="card card-similar-items">
+                        <div class="card-body similar-items justify-content-center">
+                            <h2 class="card-title">Similar items<button
+                                    class="see-more subtitle border-0 bg-transparent">See More ></button></h2>
+                            <div class="menu-item-container row">
+                                {% for item in similar_menu %}
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="card card-menu-items px-4 border shadow-0">
+                                        <a href="/product/{{ item.menuId }}" class="pt-3">
+                                            <img src="{{ item.image }}" class="card-img-top card-img-menu img-fluid"
+                                                alt="{{ item.nama }}">
+                                        </a>
+                                        <div class="card-body card-body-menu">
+                                            <h5 class="card-title">{{ item.nama }}<span class="subtitle"><i
+                                                        class="fa-regular fa-heart"></i></span></h5>
+                                            <h6 class="card-subtitle mb-4 text-body-secondary">{{ item.harga }}</h6>
+                                            <h6 class="card-subtitle mb-2 text-body-secondary star-subtitle">
+                                                <div class="stars">
+                                                    {% for i in range(1, 6) %}
+                                                    {% if item.average_rating >= i %}
+                                                    {% if item.average_rating | float >= i %}
+                                                    <i class="fa fa-star"></i>
+                                                    {% elif item.average_rating | float >= i - 0.5 %}
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                    {% else %}
+                                                    <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                    {% else %}
+                                                    <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <span class="subtitle">{{ item.sold }} item(s) sold</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="overlay-form" id="overlay-form">
+                <div class="container my-5" id="login-checkout" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div class="bg-light p-4 rounded ">
+                                <button id="close-btn" class="close-btn">×</button>
+                                <div class="row">
+                                    <div class="col-md-4 position-relative">
+
+                                        <div>
+                                            <img class="left-side-image-checkout-login"
+                                                src="https://ik.imagekit.io/rn4jfgmjp/imaji-pict-sec-4.png?updatedAt=1717856892810"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h1>Login Required</h1>
+                                        <form id="login-form" method="POST" action="/prepare_login">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">
+                                                    <h5>Enter your email to log in.</h5>
+                                                </label>
+                                                <input style="border-radius: 0;" type="email" class="form-control"
+                                                    id="email" placeholder="Enter your email" name="email">
+                                            </div>
+                                            <div class="button-edit-profile">
+                                                <button type="submit" class="btn btn-secondary button-continue">Continue
+                                                </button>
+                                            </div>
+                                            <div class="separator">
+                                                <span>OR</span>
+                                            </div>
+                                            <div class="privacy-policy-container">
+                                                <span class="privacy-policy-text">By continuing, you agree to updated
+                                                    Terms of Sale, Terms of Service, and Privacy Policy.</span>
+                                            </div>
+                                            <div class="button-edit-profile">
+                                                <button type="submit"
+                                                    class="btn btn-secondary button-register-continue">Register
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    {% include 'footer.html' %}
+    <script src="../static/script.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.nav-pills a.nav-link').click(function (event) {
+                $('.nav-pills a.nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+            $('.btn-ices').click(function () {
+                $('.btn-ices').removeClass('active');
+                $(this).addClass('active');
+            });
+            $('.btn-sugar').click(function () {
+                $('.btn-sugar').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('#button-addon1').click(function () {
+                var quantity = parseInt($('#quantity-input').val());
+                if (quantity > 1) {
+                    $('#quantity-input').val(quantity - 1);
+                }
+            });
+
+            $('#button-addon2').click(function () {
+                var quantity = parseInt($('#quantity-input').val());
+                $('#quantity-input').val(quantity + 1);
+            });
+
+            const userInfo = {{ user_info | tojson
+        }};
+        if (userInfo != null) {
+            console.log(userInfo.email)
+        } else {
+            console.log('no user')
+        }
+        const isLoggedIn = userInfo !== null;
+        $('.button-checkout').click(function () {
+            if (isLoggedIn) {
+                window.location.href = '/cart';
+            } else {
+                $('#overlay-form').fadeIn();
+                $('#login-checkout').fadeIn();
+            }
+        });
+        $('.btn-add-to-cart').click(function () {
+            if (isLoggedIn) {
+                return true;
+            } else {
+                $('#overlay-form').fadeIn();
+                $('#login-checkout').fadeIn();
+            }
+        });
+
+        $('#close-btn').on('click', function () {
+            $('#overlay-form').hide();
+        })
+        $('#add-to-cart-form').on('submit', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData)
+            $.ajax({
+                type: 'POST',
+                url: '/add_to_cart',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: "Added to cart!",
+                            text: "Your menu has been added to cart!",
+                            icon: "success"
+                        });
+                    } 
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        $('#checkout-button').on('click', function (e) {
+            e.preventDefault();
+            var formData = $('#add-to-cart-form').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '/add_to_cart',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        location.href = '/cart';
+                    } else {
+                        alert('Failed to add item to cart.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        $('.see-more ').click(function () {
+            location.href = '/menu';
+        });
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

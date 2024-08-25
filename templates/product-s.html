@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENU</title>
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://kit.fontawesome.com/c1061d734f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick-theme.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.category-menu').slick({
+                slidesToShow: 4, slidesToScroll: 2, dots: false, arrows: true, responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 2,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <section id="hero" class="hero sections">
+        <div class="container">
+            <div class="row menu-row gy-4">
+                <div class="hero-text col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
+                    data-aos="zoom-out">
+                    <h1>Special Product</h1>
+                    <p>Mari rasakan citarasa dari produk spesial kami, jangan ketinggalan ya. Langsung lakukan pembelian
+                        dan tunggu pesananmu datang!</p>
+                    <div class="hero-button d-flex">
+                        <a href="#" class="btn-get-started">GET NOW</a>
+                        <a href="#" class="glightbox btn-learn-more d-flex align-items-center"><i
+                                class="bi bi-play-circle"></i><span>LEARN MORE</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                    <img src="https://ik.imagekit.io/rn4jfgmjp/test1_9Plw_Y0HH?updatedAt=1717918537329"
+                        style="width: 80%;" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sections-menu mt-5">
+        <div class="container">
+            <button class="btn-cat active">Kopi</button>
+            <button class="btn-cat">Teh</button>
+            <button class="btn-cat">Cakes</button>
+            <button class="btn-cat">Makanan</button>
+            <button class="btn-cat">Susu</button>
+            <button class="btn-cat">Mocktail</button>
+
+            <h1 class="category-title mt-3 mb-3">Kategori Kopi<span class="subtitle">See More ></span></h1>
+            <div class="container category-menu mb-5">
+                {% for menu in menus %}
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-menu-items px-4 border shadow-0">
+                        <a href="/product/{{menu.menuId}}" class="pt-3">
+                            <img src="{{menu.image}}" class="card-img-top card-img-menu img-fluid" alt="...">
+                        </a>
+                        <div class="card-body card-body-menu">
+                            <h5 class="card-title menu-title">{{menu.nama}}<span class="subtitle"><i
+                                        class="fa-regular fa-heart"></i></span></h5>
+                            <h6 class="card-subtitle mb-4 text-body-secondary">Rp.{{menu.harga}}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary star-subtitle">
+                                <div class="stars">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                        class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="subtitle">{{menu.sold}} item sold</span>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {%include 'footer.html'%}
+
+    <script src="../static/script.js"></script>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-cat').click(function () {
+                $('.btn-cat').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

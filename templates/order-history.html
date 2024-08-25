@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MY ORDERS</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+    type="image/x-icon">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <!-- Icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/de64d1b51f.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+
+  <style>
+    .overlay-form {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+    }
+
+
+    #edit-profile-form {
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      box-shadow: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+    }
+
+    .star-rating {
+      font-size: 2rem;
+    }
+
+    .star-rating .fa-star {
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .star-rating .fa-star.selected {
+      color: gold;
+    }
+
+    .star-rating .fa-star.hover {
+      color: gold;
+    }
+    .container h3, p {
+      color: var(--buono-color);
+    }
+    .text-heading, .text-heading-secondary {
+      color: white !important;
+    }
+  </style>
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+  <section class="my-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <h3 class="text-heading">My order</h3>
+          <!-- if there is no order then it will display "you have no order" -->
+           {% if order_history | length > 0 %}
+           <p class="mt-4 text-heading">Your new and previous orders are displayed below</p>
+           {% endif %}
+          {% if order_history|length == 0 %}
+          <p class="mt-4 text-heading-secondary">You haven't made any orders yet, all information regarding your order will be displayed here.</p>
+          {% endif %}
+          {% for order in order_history %}
+          <div class="order-history" style="background-color: white">
+            <div class="order mb-3 border-bottom">
+              <div class="order-header d-flex justify-content-between align-items-center">
+                <div class="order-id mt-2 ml-2">
+                  <p>Order on {{ order.timestamp }} <span class="order-id ml-3">Order ID #{{ order.order_id }} </span><span class="order-status ml-4"></span>Order Status: {{ order.status }}</span> 
+                  </p>
+                </div>
+                
+                <div class="order-info-buttons">
+                  <a href="{{ url_for('view_bill', order_id=order.order_id) }}" class="mr-4">View Bill</a>
+                  <button class="btn btn-link manage-order">Manage order</button>
+                </div>
+              </div>
+              <div class="order-details collapse">
+                {% for item in order.order_items %}
+                <div class="order-item col-12 d-flex justify-content-between align-items-center">
+                  <div class="product-info d-flex align-items-center">
+                    <img src="{{ item.image }}" alt="Product Image">
+                    <div class="ml-3 product-info-text">
+                      <p>{{ item.name }}</p>
+                      <div class="product-details-text">
+                        <p>x{{ item.quantity }} Items</p>
+                        <p><span>{{ item.option1 }}, {{ item.option2 }}</span></p>
+                      </div>
+                      <!-- print total price of products purchased-->
+                      <p>Rp.{{ (item.price * item.quantity) |  formatted_number}}</p>
+                    </div>
+                  </div>
+                  <div class="buttons">
+                    <button onclick="location.href='/product/{{ item.menuId }}'"
+                      class="btn btn-secondary button-buy-again">Buy again</button>
+                    {% if not item.reviewed %}
+                    <button class="btn btn-link review-button" style="color: grey;"
+                      data-item-menu-id="{{ item.menuId }}">Review</button>
+                    {% else %}
+                    <button class="btn btn-link review-button" style="color: grey;" disabled>Reviewed</button>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+                <!-- print total price of all order -->
+                <div class="total-price d-flex justify-content-end mr-3 mt-2">
+                  <p>Total Purchase: Rp. {{ order.total_price |  formatted_number}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Review form modal -->
+    <div class="overlay-form" id="review-form-overlay" style="display: none;">
+      <div class="container my-5" id="review-form" style="display: none;">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <div class="bg-light p-4 rounded">
+              <h4 class="mb-3">Write a Review</h4>
+              <form action="{{ url_for('submit_review') }}" method="POST">
+                <input type="hidden" name="order_id" id="review-order-id">
+                <input type="hidden" name="item_id" id="review-item-id">
+                <div class="mb-3">
+                  <label for="reviewText" class="form-label">Your Review</label>
+                  <textarea class="form-control" id="reviewText" name="reviewText" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="rating" class="form-label">Rating</label>
+                  <div class="star-rating">
+                    <span class="fa fa-star" data-value="1"></span>
+                    <span class="fa fa-star" data-value="2"></span>
+                    <span class="fa fa-star" data-value="3"></span>
+                    <span class="fa fa-star" data-value="4"></span>
+                    <span class="fa fa-star" data-value="5"></span>
+                  </div>
+                  <input type="hidden" name="rating" id="rating" value="0">
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-secondary me-2 review-cancel-button">Cancel</button>
+                  <button type="submit" class="btn btn-secondary">Submit Review</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Edit profile form -->
+    <div class="overlay-form" id="overlay-form"> <!-- Overlay -->
+      <div class="container my-5" id="edit-profile-form" style="display: none;">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <div class="bg-light p-4 rounded">
+              <form action="{{ url_for('update_profile') }}" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-md-4 position-relative profile-picture-edit">
+                    <!-- Logo kamera -->
+                    <div class="position-absolute bottom-50 start-50 translate-middle-x mb-3 little-camera-picture">
+                      <input id="upload" type="file" class="form-control" accept=".png,.jpg,.jpeg" name="image_file"
+                        style="opacity: 0; position: absolute;" placeholder="Enter the Image" />
+                      <i class="fas fa-camera fa-lg"></i>
+                    </div>
+                    <!-- Gambar pengguna -->
+                    <div class="d-flex align-items-center justify-content-center mb-3 mt-3">
+                      <div>
+                        <img src="{{user_info.profile_image}}" id="previewImage" alt="User" class="rounded-circle"
+                          style="width: 150px; height: 150px;">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="hidden" name="current_image" id="current_image" value="{{user_info.profile_image}}">
+                    <div class="mb-3">
+                      <label for="fullName" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="fullName" placeholder="{{user_info.user_name}}"
+                        value="{{user_info.user_name}}" name="fullName">
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control" name="email" id="email" placeholder="{{user_info.email}}"
+                        value="{{user_info.email}}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="oldPassword" class="form-label">Old Password</label>
+                      <input type="password" class="form-control" name="oldPassword" id="oldPassword"
+                        placeholder="Your Old Password">
+                    </div>
+                    <div class="mb-3">
+                      <label for="newPassword" class="form-label">New Password</label>
+                      <input type="password" class="form-control" name="newPassword" id="newPassword"
+                        placeholder="Your New Password">
+                    </div>
+                    <div class="d-flex justify-content-end button-edit-profile">
+                      <button type="button" class="btn button-edit-profile-cancel me-2">Cancel</button>
+                      <button type="submit" class="btn btn-secondary button-profile">Save Profile</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  {% include 'footer.html' %}
+  <!-- Bootstrap JS and jQuery -->
+  <script src="../static/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.button-profile').click(function () {
+        $('#overlay-form').fadeIn();
+        $('#edit-profile-form').fadeIn();
+        $('.oldPassword').val('');
+        $('.newPassword').val('');
+      });
+
+      $('.button-edit-profile-cancel').click(function () {
+        $('#overlay-form').fadeOut();
+        $('#edit-profile-form').fadeOut();
+      });
+
+      const image = $(this).data('image');
+      $('#upload').change(function () {
+        const file = this.files[0];
+        console.log(file);
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            $('#previewImage').attr('src', e.target.result);
+            $('#currentImage').val(image);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+
+      $('.manage-order').click(function () {
+        $(this).closest('.order').find('.order-details').collapse('toggle');
+      });
+      $('.review-button').each(function () {
+        var $button = $(this);
+
+        var orderId = $button.closest('.order').find('.order-id span').text().split('#')[1];
+        var itemId = $button.data('item-menu-id');
+
+        $.ajax({
+          type: 'POST',
+          url: '/check_review',
+          data: {
+            order_id: orderId,
+            item_id: itemId
+          },
+          success: function (response) {
+            if (response.reviewed) {
+              $button.attr('disabled', true).text('Reviewed');
+            }
+          },
+          error: function (error) {
+            console.error('Error checking review:', error);
+          }
+        });
+      });
+
+      $('.review-button').click(function () {
+        var orderId = $(this).closest('.order').find('.order-id span').text().split('#')[1];
+        var itemMenuId = $(this).data('item-menu-id');
+        console.log(orderId, itemMenuId);
+        $('#review-order-id').val(orderId);
+        $('#review-item-id').val(itemMenuId);
+        $('#review-form-overlay').fadeIn();
+        $('#review-form').fadeIn();
+      });
+
+      $('.review-cancel-button').click(function () {
+        $('#review-form-overlay').fadeOut();
+        $('#review-form').fadeOut();
+      });
+
+      $('.star-rating .fa-star').hover(
+        function () {
+          $(this).addClass('hover').prevAll().addClass('hover');
+        }, function () {
+          $(this).removeClass('hover').prevAll().removeClass('hover');
+        }
+      );
+
+      $('.star-rating .fa-star').click(function () {
+        var ratingValue = $(this).data('value');
+        $('.star-rating .fa-star').removeClass('selected');
+        $(this).addClass('selected').prevAll().addClass('selected');
+        $('#rating').val(ratingValue);
+      });
+
+    });
+  </script>
+</body>
+
+</html>

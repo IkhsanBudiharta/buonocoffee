@@ -1,0 +1,86 @@
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <a class="navbar-brand mt-lg-0 d-flex align-items-center " href="/">
+            <img style="margin-right: 12px;"
+                src="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879" height="48"
+                alt="Kedai Imaji Logo" loading="lazy" /> Buono
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" data-bs-toggle="collapse" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu') }}">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                </li>
+            </ul>
+            <div class="dropdown ms-auto">
+                <a href="{{ url_for('cart') }} " class="cart-icon mr-3"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a class="dropdown-toggle profile-dropdown" href="#" data-bs-toggle="dropdown"
+                    id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                    {% if user_info %}
+                    <img src="{{user_info.profile_image}}" class="rounded-circle" height="25" width="25"
+                        alt="Black and White Portrait of a Man" />
+                    {% else %}
+                    <img src="https://ik.imagekit.io/coffeeshopteam3/blank-profile-picture-973460_960_720.png"
+                        class="rounded-circle" height="25" width="25" alt="Black and White Portrait of a Man" />
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                    {% if user_info %}
+                    <li>
+                        <a class="dropdown-item" href="/profile">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/order_history">My orders</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" onclick="sign_out()">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="dropdown-item" href="/login">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+
+<script>
+    $(window).resize(function () {
+        if ($(window).width() <= 991) {
+            $(".dropdown-menu").removeClass("dropdown-menu-end");
+        } else {
+            $(".dropdown-menu").addClass("dropdown-menu-end");
+        }
+        if ($(window).width() >= 992) {
+            $(".navbar-nav").css("display", "");
+        }
+    }).resize();
+</script>

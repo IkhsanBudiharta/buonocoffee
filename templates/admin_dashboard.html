@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADMIN DASHBOARD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://kit.fontawesome.com/de64d1b51f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../static/script.js"></script>
+    <style>
+        body {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #e6e0d4;
+            padding: 20px;
+            min-height: 110vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo h3 {
+            color: var(--main-color);
+            font-size: 2rem;
+            font-weight: 500;
+            font-family: var(--body-font);
+            padding: 0;
+            margin: 0;
+        }
+
+        .content {
+            color: #666;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .nav-link.active {
+            font-weight: bold;
+        }
+
+        .custom-checkbox label {
+            margin-right: 10px;
+        }
+
+        .admin-profile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .media-and-save {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link-admin i {
+            font-size: 1.5em;
+            padding: 5px;
+        }
+
+        .nav-link-admin-only i {
+            font-size: 1.4em;
+            padding: 5px;
+        }
+
+        .nav-link-admin-only {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-link-admin a {
+            color: #666;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .sidebar-link-admin a:hover {
+            color: #f5efe3;
+            background-color: #3a422b;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .nav-link-admin {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-toggler {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .button-save-admin-add-product {
+            border-radius: 0;
+            border: none;
+        }
+
+        .button-save-admin-add-product:hover {
+            background-color: darkgrey;
+            color: white;
+            border-radius: 0;
+            border: none;
+        }
+
+        .upload-image-admin-add-product {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: #e6e0d4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .upload-image-admin-add-product-second {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: #e6e0d4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .new-content {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .overview-card {
+            padding: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+        }
+
+        .icon {
+            margin-top: -80px;
+            border: 1px solid #666;
+            padding: 5px 5px;
+        }
+
+        .icon-dollar {
+            margin-top: -80px;
+            border: 1px solid #666;
+            padding: 5px 9px;
+        }
+
+        .icon i {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .icon-dollar i {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .info {
+            flex-grow: 1;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .status-new {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .status-in-progress {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .status-completed {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .overlay-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .overlay-content h2 {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include 'sidebar-admin.html' %}
+
+    <div class="content">
+        <h2 style="color: white;">Dashboard</h2>
+        <div class="dropdown ms-auto">
+            <a class="dropdown-toggle profile-dropdown" href="#" data-bs-toggle="dropdown" id="navbarDropdownMenuAvatar"
+                role="button" aria-expanded="false">
+                <img src="{{user_info.profile_image}}" class="rounded-circle" height="40" width="40"
+                    alt="Admin Profile" />
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                <li>
+                    <a class="dropdown-item" href="/profile">My profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="sign_out()">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- New content starts here -->
+        <div class="new-content">
+            <div class="content-header-admin-dashboard mt-4">
+                <h5><i class='bx bxs-dashboard mr-2'></i>Overview</h5>
+            </div>
+            <!-- Overview Section -->
+            <div class="row" id="overview-section">
+                <!-- Overview cards will be inserted here -->
+            </div>
+
+            <!-- Report Section -->
+            <div class="card-header-admin-dashboard mt-5">
+                <h5><i class='bx bxs-report mr-2'></i>Detailed Report</h5>
+            </div>
+            <div class="card-admin-dashboard">
+                <div class="card-body-admin-dashboard">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col"><input type="checkbox"></th> -->
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Menu</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Order Value</th>
+                                <th scope="col">Order Date</th>
+                                <!-- order receipt -->
+                                <!-- <th scope="col">Status</th>
+                                <th scope="col">Actions</th> -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+
+                        </tbody>
+                    </table>
+
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <p style="color: #fff" id="result-count">0 results</p>
+                            </div>
+                            <div class="col-md-6">
+                                <nav aria-label="Page navigation example pagination-container">
+                                    <ul class="pagination justify-content-end" id="pagination">
+                                        <!-- Pagination buttons akan ditambahkan disini -->
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-btn">&times;</span>
+            <h2>Set Status</h2>
+            <select id="statusSelect" class="form-control mb-3">
+                <option value="NEW">NEW</option>
+                <option value="IN-PROGRESS">IN-PROGRESS</option>
+                <option value="COMPLETED">COMPLETED</option>
+            </select>
+            <button id="saveBtn" class="btn btn-primary border-0">Save</button>
+        </div>
+        
+    </div>
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+  
+
+            $.getJSON('/api/overview', function (data) {
+              console.log(data)
+                $('#overview-section').html(`
+                <div class="col-md-4">
+                    <div class="overview-card bg-light">
+                        <div class="info">
+                            <h4>Monthly Income</h4>
+                            <h2>${formatCurrency(data.turnover_month)}</h2>
+                            <p>Income for this month</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="overview-card bg-light">
+                        <div class="info">
+                            <h4>Today's Income</h4>
+                            <h2>${formatCurrency(data.profit)}</h2>
+                            <p>Income for today</p>
+                        </div>
+                        <div class="icon-dollar">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="overview-card bg-light">
+                        <div class="info">
+                            <h4>Total Users</h4>
+                            <h2>${data.customers}</h2>
+                            <p>All users including admin</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            `);
+            });
+
+            let currentOrderId = null;
+            $.getJSON('/api/orders', function (data) {
+                renderTable(data, 1);
+            });
+            function fetchOrders() {
+                $.getJSON('/api/orders', function (data) {
+                    renderTable(data, 1);
+                });
+            }
+
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+            }
+
+            function renderTable(data, page) {
+                const rowsPerPage = 5;
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedItems = data.slice(start, end);
+                const tableBody = $('#table-body');
+                tableBody.empty();
+                paginatedItems.forEach(item => {
+                    tableBody.append(`
+                        <tr data-order-id="${item.order_id}"> 
+                            <td><img src="../static/img/profile_placeholder.png" class="profile-icon rounded-circle mr-4" alt="Profile Image" style="width: 40px; height: 40px;"><span class="profile-text">${item.name}</span></td>
+                            <td>${item.menu}</td>
+                            <td>#${item.order_id}</td>
+                            <td>${formatCurrency(item.value)}</td>
+                            <td>${item.date}</td>
+                        </tr>
+                    `);
+
+                });
+            
+                $('#result-count').text(`${data.length} results`);
+                renderPagination(data, page);
+            }
+            
+            
+
+            function renderPagination(data, currentPage) {
+                const pagination = $('#pagination');
+                pagination.empty();
+
+                const rowsPerPage = 5;
+                const pageCount = Math.ceil(data.length / rowsPerPage);
+                let maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+
+                if (endPage - startPage < maxVisiblePages - 1) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                const createPageItem = (text, page, isActive = false) => {
+                    const pageItem = $('<li>').addClass('page-item');
+                    if (isActive) pageItem.addClass('active');
+                    pageItem.html(`<a class="page-link" href="#">${text}</a>`);
+                    pageItem.click((e) => {
+                        e.preventDefault();
+                        renderTable(data, page);
+                    });
+                    return pageItem;
+                };
+
+                if (currentPage > 1) {
+                    const prevItem = createPageItem('<i class="fas fa-chevron-left"></i>', currentPage - 1);
+                    pagination.append(prevItem);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageItem = createPageItem(i, i, i === currentPage);
+                    pagination.append(pageItem);
+                }
+
+                if (currentPage < pageCount) {
+                    const nextItem = createPageItem('<i class="fas fa-chevron-right"></i>', currentPage + 1);
+                    pagination.append(nextItem);
+                }
+            }
+
+            $(document).on('click', '.edit-icon', function (event) {
+                event.preventDefault();
+                $('#statusSelect').val('NEW');
+                currentOrderId = $(this).closest('tr').data('order-id');
+                $('#overlay').css('display', 'flex');
+                console.log(currentOrderId);
+            });
+
+            $('.close-btn').click(function () {
+                $('#overlay').css('display', 'none');
+            });
+
+            $('#saveBtn').click(function () {
+                const status = $('#statusSelect').val();
+                console.log('Status selected:', status);
+                $('#overlay').css('display', 'none');
+            });
+            $('#saveBtn').click(function () {
+                const status = $('#statusSelect').val();
+                console.log(status);
+                if (currentOrderId) {
+                    $.ajax({
+                        url: '/update_order_status',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ order_id: currentOrderId, status: status }),
+                        success: function(response) {
+                            if (response.success) {
+                                fetchOrders();
+                                $('#overlay').css('display', 'none');
+                            } else {
+                                alert('Failed to update status: ' + response.message);
+                            }
+                        },
+                        error: function(error) {
+                            alert('Error updating status: ' + error.responseJSON.message);
+                        }
+                    });
+                }
+                fetchOrders();
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

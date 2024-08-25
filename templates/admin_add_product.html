@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADMIN ADD MENU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://kit.fontawesome.com/de64d1b51f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../static/script.js"></script>
+    <style>
+        body {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #e6e0d4;
+            padding: 20px;
+            min-height: 110vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo h3 {
+            color: var(--main-color);
+            font-size: 2rem;
+            font-weight: 500;
+            font-family: var(--body-font);
+            padding: 0;
+            margin: 0;
+        }
+
+        .content {
+            color: #666;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .nav-link.active {
+            font-weight: bold;
+        }
+
+        .custom-checkbox label {
+            margin-right: 10px;
+        }
+
+        .admin-profile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .media-and-save {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link-admin i {
+            font-size: 1.5em;
+            padding: 5px;
+        }
+
+        .nav-link-admin-only i {
+            font-size: 1.4em;
+            padding: 5px;
+        }
+
+        .nav-link-admin-only {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-link-admin a {
+            color: #666;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .sidebar-link-admin a:hover {
+            color: #f5efe3;
+            background-color: #3a422b;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .nav-link-admin {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-toggler {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .button-save-admin-add-product {
+            border-radius: 0 !important;
+            border: none;
+        }
+
+        .button-save-admin-add-product:hover {
+            background-color: darkgrey;
+            color: white;
+            border-radius: 0;
+            border: none;
+        }
+
+        .upload-image-admin-add-product {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: #e6e0d4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .upload-image-admin-add-product-second {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: #e6e0d4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .upload-image-admin-add-product-second:hover {
+            border-style: dashed;
+            background-color: darkgray;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 250px;
+                z-index: 1030;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggler {
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 1040;
+            }
+        }
+        input, span {
+            border-radius: 0 !important;
+        }
+        .form-group label, 
+        .media-and-save label {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include 'sidebar-admin.html' %}
+
+    <div class="content">
+        <h2 style="color: white;">Add Menu</h2>
+        <div class="dropdown ms-auto">
+            <a class="dropdown-toggle profile-dropdown" href="#" data-bs-toggle="dropdown"
+                id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                <img src="{{user_info.profile_image}}"
+                    class="rounded-circle" height="40" width="40" alt="Black and White Portrait of a Man" />
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                <li>
+                    <a class="dropdown-item" href="/profile">My profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="sign_out()">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div class="form-container">
+            <form id="productForm" action="/uploads" method="POST" enctype='multipart/form-data'>
+                <div class="form-group">
+                    <label for="productName">Menu name</label>
+                    <input type="text" class="form-control" required name="productName" id="productName"
+                        placeholder="Americano">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Rp</span>
+                    <input type="text" class="form-control" required name="productPrice" id="productPrice"
+                        placeholder="25000">
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Menu Description</label>
+                    <input type="text" class="form-control" required name="productDescription" id="productDescription"
+                        placeholder="Original Americano coffee">
+                </div>
+                <div class="form-group">
+                    <label>Menu Tag / Category</label>
+                    <div class="custom-checkbox">
+                        <input type="checkbox" name="kategori" id="Manual Brewing" value="Manual Brewing">
+                        <label for="Manual Brewing">Manual Brewing</label>
+                        <input type="checkbox" name="kategori" id="Espresso & Latte" value="Espresso & Latte">
+                        <label for="EspressoandLatte">Espresso & Latte</label>
+                        <input type="checkbox" name="kategori" id="Tea" value="Tea">
+                        <label for="Tea">Tea</label>
+                        <input type="checkbox" name="kategori" id="Snacks" value="Snacks">
+                        <label for="Snacks">Snacks</label>
+                        <input type="checkbox" name="kategori" id="Meals" value="Meals">
+                        <label for="Meals">Meals</label>
+                    </div>
+                </div>
+                <div class="media-and-save">
+                    <div class="form-group">
+                        <label>Media (Images) <span style="font-size: 12px;">*Can only upload 1 image per item/menu</span></label>
+                        <div class="d-flex">
+                            <div class="p-3 upload-image-admin-add-product">
+                                <img id="previewImage" src="https://ik.imagekit.io/coffeeshopteam3/land2.jpg"
+                                    alt="Placeholder" style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="p-3 ml-2 d-flex align-items-center justify-content-center upload-image-admin-add-product-second"
+                                style=" width: 120px; height: auto; position: relative;">
+                                <input name="image_file" type="file" id="upload"
+                                    style=" opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer;" accept=".png,.jpg,.jpeg">
+                                <label for="upload" class="btn"
+                                    style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; height: 133px;"><i
+                                        class="fa-solid fa-plus"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary button-save-admin-add-product"><i
+                            class='bx bxs-save mr-2'></i>Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#upload').change(function () {
+                const file = this.files[0];
+                console.log(file);
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#previewImage').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            $('#productForm').submit(function (event) {
+                event.preventDefault();
+
+                let isValid = true;
+                let errorMessage = '';
+
+                if (!$('#productName').val()) {
+                    isValid = false;
+                    errorMessage += 'Product name is required. ';
+                }
+                if (!$('#productPrice').val()) {
+                    isValid = false;
+                    errorMessage += 'Product price is required. ';
+                }
+                if (!$('#productDescription').val()) {
+                    isValid = false;
+                    errorMessage += 'Product description is required. ';
+                }
+
+                if ($('input[name="kategori"]:checked').length === 0) {
+                    isValid = false;
+                    errorMessage += 'At least one category must be selected. ';
+                }
+
+                if (isValid) {
+                    this.submit();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: errorMessage,
+                    });
+                }
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

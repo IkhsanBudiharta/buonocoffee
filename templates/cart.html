@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CART</title>
+    <link rel="shortcut icon" href="https://ik.imagekit.io/rn4jfgmjp/Buono_Assets/buono_logo.png?updatedAt=1722435258879"
+        type="image/x-icon">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c1061d734f.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="../static/slick/slick-theme.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script>
+
+    </script>
+
+    <style>
+        .btn-light{
+            border: 1px solid var(--buono-color) !important;
+            border-radius: 0 !important;
+        }
+        .btn-success {
+            border-radius: 0 !important;
+        }
+        .card-body-price {
+            border-radius: 10px;
+        }
+        .recommended {
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <section class="my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card summary-container border-1 shadow-0">
+                        <div class="m-4 ">
+                            <h4 class="card-title mb-4">Order Summary</h4>
+                            <hr>
+                            <div class=" order-summary-content text-center text-dark"></div>
+                            {% for item in cart_items %}
+                            <div class="row gy-3 mb-4">
+                                <div class="col-lg-5">
+                                    <div class="me-lg-5">
+                                        <div class="d-flex">
+                                            <img src="{{item.image}}" class="border rounded me-3"
+                                                style="width: 100px; height: 100px;" />
+                                            <div class="">
+                                                <a href="#" class="nav-link">{{ item.name }}</a>
+                                                <p class="text-muted">{{ item.option1 }}, {{ item.option2 }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                                    <div>
+                                        <select style="width: 100px;" class="form-select option-qty me-4"
+                                            id="quantity-{{ item.menuId }}">
+                                            {% for i in range(1, 11) %}
+                                            <option value="{{ i }}" {% if item.quantity==i %}selected{% endif %}>{{ i }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <h6 class="formatted-price" data-price="{{ item.price }}"
+                                            id="formatted-price-{{ item.menuId }}">{{ item.formatted_total }}</h6>
+                                        <small class="text-muted text-nowrap formatted-total"
+                                            id="formatted-price-{{ item.menuId }}">{{ item.formatted_price }} / per
+                                            item</small>
+                                    </div>
+                                </div>
+
+
+
+                                <div
+                                    class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                    <div class="float-md-end">
+                                        <a href="#"
+                                            class="btn btn-light border text-danger icon-hover-danger btn-remove-item"
+                                            data-item-id="{{ item.item_id }}">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    
+                    <div class="card shadow-0 border">
+                        <div class="card-body card-body-price">
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-2">Total price:</p>
+                                <p class="mb-2 total-price">{{ total_price }}</p>
+                            </div>
+                            <hr />
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-2"><em>Tax is included, you don't need to pay more</em></p>
+                            </div>
+
+                            <div class="mt-3">
+                                <button onclick="confirmPurchases()" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </button>
+                                <a href="/menu" class="btn btn-light w-100 border mt-2"> Back to menu </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container my-5">
+            <header class="mb-4">
+                <h3 class="title recommended">Recommended items <a href="/menu" class="subtitle">See More ></a></h3>
+            </header>
+            <div class="row">
+                {% for menus in menu %}
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-recommended px-4 border shadow-0 mb-4 mb-lg-0">
+
+                        <a href="#" class="pt-3">
+                            <img src="{{menus.image}}" class="card-img-top rounded-2" />
+                        </a>
+                        <div class="card-body d-flex flex-column pt-3 border-top">
+                            <a href="#" class="nav-link">{{menus.nama}}</a>
+                            <div class="price-wrap mb-2">
+                                <strong class="">{{menus.harga}}</strong>
+                            </div>
+                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+                                <button class="btn add-to-cart-btn w-100" data-menu-id="{{menus.menuId}}">Add to
+                                    cart</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+
+    </section>
+    {% include 'footer.html' %}
+    <script src="../static/script.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/slick/slick.min.js"></script>
+    <script>
+            function confirmPurchases() {
+                Swal.fire({
+                    title: "Are you sure you want to make a purchase?",
+                    showCancelButton: true,
+                    confirmButtonText: "Buy",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/confirm_purchase',
+                            method: 'POST',
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire("Thank You!", "Got to 'My orders' page to see the details", "success").then(() => {
+                                        window.location.href = '/cart';
+                                    });
+                                } else {
+                                    Swal.fire("Error", response.message, "error");
+                                }
+                            },
+                            error: function () {
+                                Swal.fire("Error", "An error occurred while confirming the purchase", "error");
+                            }
+                        });
+                    }
+                });
+            }
+            $('.input-voucher-button').click(function (event) {
+                event.preventDefault();
+                var voucherCode = $('.input-voucher').val();
+                $.ajax({
+                    url: '/apply_voucher',
+                    method: 'POST',
+                    data: { voucher_code: voucherCode },
+                    success: function (response) {
+                        if (response.success) {
+                            $('.card-body-price .total-price').text(`Rp. ${response.total_price.toLocaleString('id-ID')}`);
+                            $('.card-body-price .discount').text(`-Rp. ${response.discount.toLocaleString('id-ID')}`);
+                            $('.card-body-price .tax').text(`Rp. ${response.tax.toLocaleString('id-ID')}`);
+                            $('.card-body-price .final-total').text(`Rp. ${response.final_total_price.toLocaleString('id-ID')}`);
+                            alert('Voucher applied successfully');
+                        } else {
+                            alert('Invalid voucher code');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while applying the voucher');
+                    }
+                });
+            });
+            $('.btn-remove-item').on('click', function (event) {
+                event.preventDefault();
+                var itemId = $(this).data('item-id');
+                console.log(itemId);
+                Swal.fire({
+                    title: "Delete the item?",
+                    text: "Are you sure want to delete it?",
+                    icon: "question",
+                    showCancelButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/remove_item',
+                            method: 'POST',
+                            data: { item_id: itemId },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "Item has been deleted from cart!",
+                                        icon: "success"
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    alert('Failed to remove item');
+                                }
+                            },
+                            error: function () {
+                                alert('An error occurred while removing the item');
+                            }
+                        });
+                    }
+                });
+
+            });
+            $('.option-qty').change(function () {
+                var quantity = parseInt($(this).val());
+                var menuId = $(this).attr('id').split('-')[1];
+                var price = parseInt($(`#formatted-price-${menuId}`).data('price'));
+
+                $.ajax({
+                    url: '/update_quantity',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ menu_id: menuId, quantity: quantity }),
+                    success: function (response) {
+
+                        $(`#formatted-price-${menuId}`).text(response.formatted_total);
+                        $(`#formatted-total-${menuId}`).text(response.formatted_total + ' / per item');
+                        $('.total-price').text(response.total_price);
+                        $('.discount').text(response.discount);
+                        $('.tax').text(response.tax);
+                        $('.final-total').text(response.final_total_price);
+                    },
+                    error: function () {
+                        alert('An error occurred while updating the quantity');
+                    }
+                });
+            });
+            $('.add-to-cart-btn').click(function (e) {
+                e.preventDefault();
+                let menuId = $(this).data('menu-id');
+                console.log(menuId);
+                formData = new FormData();
+                formData.append('menuId', menuId);
+                formData.append('quantity', 1);
+                formData.append('option1', 'Less Ice');
+                formData.append('option2', 'Medium');
+                $.ajax({
+                    type: "POST",
+                    url: "/add_to_cart",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Added to cart!',
+                                text: 'The item has been added to your cart.',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message,
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong!',
+                        });
+                    }
+                });
+            });
+
+    </script>
+
+</body>
+
+</html>

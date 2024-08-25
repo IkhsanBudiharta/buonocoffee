@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPLOAD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/upload" method="POST">
+
+            <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama">
+            </div>
+
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="text" class="form-control" id="harga" name="harga">
+            </div>
+
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi</label>
+                <input type="text" class="form-control" id="deskripsi" name="deskripsi">
+            </div>
+
+            <div class="form-group">
+                <label>Kategori</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Kopi" id="kopi" name="kategori">
+                    <label class="form-check-label" for="kopi">Kopi</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Teh" id="teh" name="kategori">
+                    <label class="form-check-label" for="teh">Teh</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Cakes" id="cakes" name="kategori">
+                    <label class="form-check-label" for="cakes">Cakes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Makanan" id="makanan" name="kategori">
+                    <label class="form-check-label" for="makanan">Makanan</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Susu" id="susu" name="kategori">
+                    <label class="form-check-label" for="susu">Susu</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Mocktail" id="mocktail" name="kategori">
+                    <label class="form-check-label" for="mocktail">Mocktail</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image URL</label>
+                <input type="text" class="form-control" id="image" name="image">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
+</body>
+</html>
